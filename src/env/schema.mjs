@@ -7,7 +7,7 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
     DATA_SOURCE: z.enum(["csv", "database"]),
-    DATABASE_URL: z.string().url().nullable(),
+    DATABASE_URL: z.string().url().optional(),
     NODE_ENV: z.enum(["development", "test", "production"]),
 });
 
