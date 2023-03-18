@@ -9,7 +9,7 @@ const schema = `
             email: String
             forename: String
             surname: String
-            contact_number: String
+            contactNumber: String
             postcode: String
         ): [Customer]
         product(
@@ -19,6 +19,23 @@ const schema = `
             model: String
             price: Float
         ): [Product]
+    }
+
+    type Mutation {
+        createCustomer(
+            email: String!
+            forename: String!
+            surname: String!
+            contactNumber: String!
+            postcode: String!
+        ): Customer
+        createProduct(
+            vin: String!
+            colour: String!
+            make: String!
+            model: String!
+            price: Float!
+        ): Product
     }
 `;
 
