@@ -1,11 +1,11 @@
 // This file will container all ValueObjects related to the Customer namespace.
 export class Customer {
     constructor(
-        private readonly email: string | null,
-        private readonly forename: string | null,
-        private readonly surname: string | null,
-        private readonly contactNumber: string | null,
-        private readonly postcode: string | null
+        private readonly email: string,
+        private readonly forename: string,
+        private readonly surname: string,
+        private readonly contactNumber: string,
+        private readonly postcode: string
     ) {}
 
     getEmail() {

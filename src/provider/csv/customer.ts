@@ -19,6 +19,30 @@ export default class CustomerProvider implements Customer {
         return this.parse(args);
     }
 
+    async add(customer: CustomerData) {
+        return new Promise<CustomerData>((resolve, reject) => {
+            const row = {
+                email: customer.getEmail(),
+                forename: customer.getForename(),
+                surname: customer.getSurname(),
+                contactNumber: customer.getContactNumber(),
+                postcode: customer.getPostcode(),
+            };
+
+            fs.appendFile(
+                path.resolve(CONFIG.CUSTOMER_PATH),
+                `${row.email},${row.forename},${row.surname},${row.contactNumber},${row.postcode}`,
+                (error) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(this.toCustomer(row));
+                    }
+                }
+            );
+        });
+    }
+
     private async parse(args: CustomerArgs) {
         return new Promise<CustomerData[]>((resolve, reject) => {
             const results: CustomerData[] = [];
@@ -64,11 +88,11 @@ export default class CustomerProvider implements Customer {
 
     private toCustomer(row: CustomerCSV) {
         return new CustomerData(
-            row.email,
-            row.forename,
-            row.surname,
-            row.contactNumber,
-            row.postcode
+            row.email as string,
+            row.forename as string,
+            row.surname as string,
+            row.contactNumber as string,
+            row.postcode as string
         );
     }
 }

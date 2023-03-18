@@ -8,4 +8,5 @@ import { CustomerArgs } from "./types";
 // It just needs to know that it can fetch data.
 export interface Customer {
     fetch(args?: CustomerArgs): Promise<CustomerData[]>;
+    add(customer: CustomerData): Promise<CustomerData>;
 }

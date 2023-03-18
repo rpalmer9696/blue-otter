@@ -6,3 +6,11 @@ export type CustomerArgs = {
     contactNumber?: string;
     postcode?: string;
 };
+
+export type CreateCustomerArgs = {
+    email: string;
+    forename: string;
+    surname: string;
+    contactNumber: string;
+    postcode: string;
+};

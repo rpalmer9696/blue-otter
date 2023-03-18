@@ -1,6 +1,7 @@
 //This file will contain all the resolvers for the Customer namespace.
 import { Customer } from "./providers";
 import { CustomerArgs } from "./types";
+import { Customer as CustomerData } from "./data";
 
 export class CustomerResolver {
     constructor(private readonly provider: Customer) {}
@@ -9,5 +10,7 @@ export class CustomerResolver {
         return this.provider.fetch(args);
     }
 
-    // We can add a method for mutation here.
+    add(customer: CustomerData) {
+        return this.provider.add(customer);
+    }
 }
