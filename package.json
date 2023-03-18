@@ -12,8 +12,6 @@
     "dependencies": {
         "@apollo/server": "^4.5.0",
         "@as-integrations/next": "^1.2.0",
-        "@graphql-tools/graphql-file-loader": "^7.5.16",
-        "@graphql-tools/load": "^7.8.13",
         "@types/node": "18.15.3",
         "@types/react": "18.0.28",
         "@types/react-dom": "18.0.11",
