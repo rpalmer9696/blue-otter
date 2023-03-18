@@ -4,7 +4,8 @@ import * as Product from "@/lib/product/resolvers";
 import { ProductArgs } from "@/lib/product/types";
 import CustomerCSVProvider from "@/provider/csv/customer";
 import CustomerDBProvider from "@/provider/db/customer";
-import ProductProvider from "@/provider/csv/product";
+import ProductCSVProvider from "@/provider/csv/product";
+import ProductDBProvider from "@/provider/db/product";
 import { env } from "@/env/server.mjs";
 
 const customerResolver = new Customer.CustomerResolver(
@@ -12,7 +13,11 @@ const customerResolver = new Customer.CustomerResolver(
         ? new CustomerCSVProvider()
         : new CustomerDBProvider()
 );
-const productResolver = new Product.ProductResolver(new ProductProvider());
+const productResolver = new Product.ProductResolver(
+    env.DATA_SOURCE === "csv"
+        ? new ProductCSVProvider()
+        : new ProductDBProvider()
+);
 
 // Keeps all the resolvers in one place.
 // So it's easy to see what resolvers are available.
