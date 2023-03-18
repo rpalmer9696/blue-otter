@@ -1,0 +1,19 @@
+#import Customer from "./schema/Customer.graphql"
+#import Product from "./schema/Product.graphql"
+
+type Query {
+    customer(
+        email: String
+        forename: String
+        surname: String
+        contact_number: String
+        postcode: String
+    ): [Customer]
+    product(
+        vin: String
+        colour: String
+        make: String
+        model: String
+        price: Float
+    ): [Product]
+}
