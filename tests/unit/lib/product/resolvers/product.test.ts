@@ -1,4 +1,4 @@
-import { productResolver } from "@/lib/product/resolvers";
+import { ProductResolver } from "@/lib/product/resolvers";
 import { Product } from "@/lib/product/data";
 import ProductProvider from "@/provider/csv/product";
 import { describe, it, expect, vi, afterEach } from "vitest";
@@ -24,12 +24,10 @@ describe("ProductResolver", () => {
         );
 
         const spy = vi.spyOn(provider, "fetch").mockResolvedValue([product]);
+        const resolver = new ProductResolver(provider);
 
         // Act
-        const actual = productResolver({
-            args,
-            provider: provider,
-        });
+        const actual = resolver.fetch(args);
 
         // Assert
         await expect(actual).resolves.toEqual([product]);

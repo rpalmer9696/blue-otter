@@ -2,12 +2,10 @@
 import { Product } from "./providers";
 import { ProductArgs } from "./types";
 
-export function productResolver({
-    args,
-    provider,
-}: {
-    args?: ProductArgs;
-    provider: Product;
-}) {
-    return provider.fetch(args);
+export class ProductResolver {
+    constructor(private readonly provider: Product) {}
+
+    fetch(args?: ProductArgs) {
+        return this.provider.fetch(args);
+    }
 }

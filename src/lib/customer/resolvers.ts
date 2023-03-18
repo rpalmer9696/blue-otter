@@ -2,12 +2,12 @@
 import { Customer } from "./providers";
 import { CustomerArgs } from "./types";
 
-export function customerResolver({
-    args,
-    provider,
-}: {
-    args?: CustomerArgs;
-    provider: Customer;
-}) {
-    return provider.fetch(args);
+export class CustomerResolver {
+    constructor(private readonly provider: Customer) {}
+
+    fetch(args?: CustomerArgs) {
+        return this.provider.fetch(args);
+    }
+
+    // We can add a method for mutation here.
 }
