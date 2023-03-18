@@ -1,10 +1,10 @@
 export class Product {
     constructor(
-        private readonly vin: string | null,
-        private readonly colour: string | null,
-        private readonly make: string | null,
-        private readonly model: string | null,
-        private readonly price: number | null
+        private readonly vin: string,
+        private readonly colour: string,
+        private readonly make: string,
+        private readonly model: string,
+        private readonly price: number
     ) {}
 
     getVin() {

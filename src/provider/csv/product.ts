@@ -19,6 +19,30 @@ export default class ProductProvider implements Product {
         return this.parse(args);
     }
 
+    async add(product: ProductData) {
+        return new Promise<ProductData>((resolve, reject) => {
+            const row = {
+                vin: product.getVin(),
+                colour: product.getColour(),
+                make: product.getMake(),
+                model: product.getModel(),
+                price: product.getPrice(),
+            };
+
+            fs.appendFile(
+                path.resolve(CONFIG.PRODUCT_PATH),
+                `${row.vin},${row.colour},${row.make},${row.model},${row.price}`,
+                (error) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(this.toProduct(row));
+                    }
+                }
+            );
+        });
+    }
+
     private async parse(args: ProductArgs) {
         return new Promise<ProductData[]>((resolve, reject) => {
             const results: ProductData[] = [];
@@ -64,11 +88,11 @@ export default class ProductProvider implements Product {
 
     private toProduct(row: ProductCSV) {
         return new ProductData(
-            row.vin,
-            row.colour,
-            row.make,
-            row.model,
-            row.price
+            row.vin as string,
+            row.colour as string,
+            row.make as string,
+            row.model as string,
+            row.price as number
         );
     }
 }

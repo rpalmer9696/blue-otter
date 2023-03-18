@@ -3,4 +3,5 @@ import { ProductArgs } from "./types";
 
 export interface Product {
     fetch(args?: ProductArgs): Promise<ProductData[]>;
+    add(product: ProductData): Promise<ProductData>;
 }

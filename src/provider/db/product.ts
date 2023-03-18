@@ -25,4 +25,24 @@ export default class ProductProvider implements Product {
             );
         });
     }
+
+    async add(product: ProductData) {
+        const row = await prisma.product.create({
+            data: {
+                vin: product.getVin(),
+                colour: product.getColour(),
+                make: product.getMake(),
+                model: product.getModel(),
+                price: product.getPrice(),
+            },
+        });
+
+        return new ProductData(
+            row.vin,
+            row.colour,
+            row.make,
+            row.model,
+            row.price
+        );
+    }
 }

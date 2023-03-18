@@ -1,6 +1,6 @@
-import { ProductResolver } from "@/lib/product/resolvers";
 import { Product } from "@/lib/product/data";
-import ProductProvider from "@/provider/csv/product";
+import { ProductResolver } from "@/lib/product/resolvers";
+import { ProductArgs } from "@/lib/product/types";
 import { describe, it, expect, vi, afterEach } from "vitest";
 
 describe("ProductResolver", () => {
@@ -14,7 +14,6 @@ describe("ProductResolver", () => {
             make: "Range Rover",
         };
 
-        const provider = new ProductProvider();
         const product = new Product(
             "VNI83728",
             "black",
@@ -22,6 +21,12 @@ describe("ProductResolver", () => {
             "Evoque",
             45000
         );
+        const provider = vi.fn(() => {
+            return {
+                fetch: async (args: ProductArgs) => [product],
+                add: async (args: Product) => product,
+            };
+        })();
 
         const spy = vi.spyOn(provider, "fetch").mockResolvedValue([product]);
         const resolver = new ProductResolver(provider);
@@ -32,6 +37,34 @@ describe("ProductResolver", () => {
         // Assert
         await expect(actual).resolves.toEqual([product]);
         expect(spy).toHaveBeenCalledWith(args);
+        expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    it("should add a product", async () => {
+        // Arrange
+        const product = new Product(
+            "VNI83728",
+            "black",
+            "Range Rover",
+            "Evoque",
+            45000
+        );
+        const provider = vi.fn(() => {
+            return {
+                fetch: async (args: ProductArgs) => [product],
+                add: async (args: Product) => product,
+            };
+        })();
+
+        const spy = vi.spyOn(provider, "add").mockResolvedValue(product);
+        const resolver = new ProductResolver(provider);
+
+        // Act
+        const actual = resolver.add(product);
+
+        // Assert
+        await expect(actual).resolves.toEqual(product);
+        expect(spy).toHaveBeenCalledWith(product);
         expect(spy).toHaveBeenCalledTimes(1);
     });
 });

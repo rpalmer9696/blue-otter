@@ -1,4 +1,5 @@
 //This file will contain all the resolvers for the Product namespace.
+import { Product as ProductData } from "./data";
 import { Product } from "./providers";
 import { ProductArgs } from "./types";
 
@@ -7,5 +8,9 @@ export class ProductResolver {
 
     fetch(args?: ProductArgs) {
         return this.provider.fetch(args);
+    }
+
+    add(product: ProductData) {
+        return this.provider.add(product);
     }
 }
