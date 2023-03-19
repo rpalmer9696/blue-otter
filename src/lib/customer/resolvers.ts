@@ -13,4 +13,8 @@ export class CustomerResolver {
     add(customer: CustomerData) {
         return this.provider.add(customer);
     }
+
+    delete(email: string) {
+        return this.provider.delete(email);
+    }
 }

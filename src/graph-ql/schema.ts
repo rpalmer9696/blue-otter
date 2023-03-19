@@ -36,6 +36,9 @@ const schema = `
             model: String!
             price: Float!
         ): Product
+        deleteCustomer(
+            email: String!
+        ): Customer
     }
 `;
 

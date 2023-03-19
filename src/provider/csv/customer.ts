@@ -43,6 +43,44 @@ export default class CustomerProvider implements Customer {
         });
     }
 
+    async delete(email: string) {
+        return new Promise<void>((resolve, reject) => {
+            const results: CustomerData[] = [];
+
+            fs.createReadStream(path.resolve(CONFIG.CUSTOMER_PATH))
+                .pipe(csv.parse({ headers: true }))
+                .on("error", (error) => reject(error))
+                .on("data", (row) => {
+                    if (row.email !== email) {
+                        results.push(this.toCustomer(row));
+                    }
+                })
+                .on("end", () => {
+                    const formattedHeaders = Object.keys(results[0]).join(",");
+
+                    const formattedRows = results.map((row) => {
+                        return `${row.getEmail()},${row.getForename()},${row.getSurname()},${row.getContactNumber()},${row.getPostcode()}`;
+                    });
+
+                    const data = [formattedHeaders, ...formattedRows].join(
+                        "\r\n"
+                    );
+
+                    fs.writeFile(
+                        path.resolve(CONFIG.CUSTOMER_PATH),
+                        data.concat("\r\n"),
+                        (error) => {
+                            if (error) {
+                                reject(error);
+                            } else {
+                                resolve();
+                            }
+                        }
+                    );
+                });
+        });
+    }
+
     private async parse(args: CustomerArgs) {
         return new Promise<CustomerData[]>((resolve, reject) => {
             const results: CustomerData[] = [];

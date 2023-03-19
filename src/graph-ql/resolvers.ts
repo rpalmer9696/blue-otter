@@ -15,6 +15,7 @@ export function getResolvers() {
         Mutation: {
             createCustomer: createCustomerResolver,
             createProduct: createProductResolver,
+            deleteCustomer: deleteCustomerResolver,
         },
     };
 }
@@ -33,6 +34,10 @@ function createCustomerResolver(parent: unknown, args: CreateCustomerArgs) {
             args.postcode
         )
     );
+}
+
+function deleteCustomerResolver(parent: unknown, args: CreateCustomerArgs) {
+    return Factory.getCustomer().delete(args.email);
 }
 
 function productQueryResolver(parent: unknown, args: ProductArgs) {

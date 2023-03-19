@@ -45,4 +45,12 @@ export default class CustomerProvider implements Customer {
             row.postcode
         );
     }
+
+    async delete(email: string) {
+        await prisma.customer.delete({
+            where: {
+                email: email,
+            },
+        });
+    }
 }

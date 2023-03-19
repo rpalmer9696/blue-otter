@@ -25,6 +25,7 @@ describe("CustomerResolver", () => {
             return {
                 fetch: async (args: CustomerArgs) => [customer],
                 add: async (args: Customer) => customer,
+                delete: async (email: string) => {},
             };
         })();
 
@@ -53,6 +54,7 @@ describe("CustomerResolver", () => {
             return {
                 fetch: async (args: CustomerArgs) => [customer],
                 add: async (args: Customer) => customer,
+                delete: async (email: string) => {},
             };
         })();
 
@@ -65,6 +67,37 @@ describe("CustomerResolver", () => {
         // Assert
         await expect(actual).resolves.toEqual(customer);
         expect(spy).toHaveBeenCalledWith(customer);
+        expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    it("should delete a customer", async () => {
+        // Arrange
+        const email = "test@email.com";
+        const customer = new Customer(
+            "test@email.com",
+            "John",
+            "Smith",
+            "01234567890",
+            "AB1 2CD"
+        );
+
+        const provider = vi.fn(() => {
+            return {
+                fetch: async (args: CustomerArgs) => [customer],
+                add: async (args: Customer) => customer,
+                delete: async (email: string) => {},
+            };
+        })();
+
+        const spy = vi.spyOn(provider, "delete").mockResolvedValue();
+        const resolver = new CustomerResolver(provider);
+
+        // Act
+        const actual = resolver.delete(email);
+
+        // Assert
+        await expect(actual).resolves.toEqual(undefined);
+        expect(spy).toHaveBeenCalledWith(email);
         expect(spy).toHaveBeenCalledTimes(1);
     });
 });
