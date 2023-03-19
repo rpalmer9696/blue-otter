@@ -39,6 +39,9 @@ const schema = `
         deleteCustomer(
             email: String!
         ): Customer
+        deleteProduct(
+            vin: String!
+        ): Product
     }
 `;
 

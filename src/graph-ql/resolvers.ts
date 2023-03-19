@@ -16,6 +16,7 @@ export function getResolvers() {
             createCustomer: createCustomerResolver,
             createProduct: createProductResolver,
             deleteCustomer: deleteCustomerResolver,
+            deleteProduct: deleteProductResolver,
         },
     };
 }
@@ -54,4 +55,8 @@ function createProductResolver(parent: unknown, args: CreateProductArgs) {
             args.price
         )
     );
+}
+
+function deleteProductResolver(parent: unknown, args: CreateProductArgs) {
+    return Factory.getProduct().delete(args.vin);
 }

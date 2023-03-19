@@ -25,6 +25,7 @@ describe("ProductResolver", () => {
             return {
                 fetch: async (args: ProductArgs) => [product],
                 add: async (args: Product) => product,
+                delete: async (vin: string) => {},
             };
         })();
 
@@ -53,6 +54,7 @@ describe("ProductResolver", () => {
             return {
                 fetch: async (args: ProductArgs) => [product],
                 add: async (args: Product) => product,
+                delete: async (vin: string) => {},
             };
         })();
 
@@ -65,6 +67,35 @@ describe("ProductResolver", () => {
         // Assert
         await expect(actual).resolves.toEqual(product);
         expect(spy).toHaveBeenCalledWith(product);
+        expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    it("should delete a product", async () => {
+        // Arrange
+        const product = new Product(
+            "VNI83728",
+            "black",
+            "Range Rover",
+            "Evoque",
+            45000
+        );
+        const provider = vi.fn(() => {
+            return {
+                fetch: async (args: ProductArgs) => [product],
+                add: async (args: Product) => product,
+                delete: async (vin: string) => {},
+            };
+        })();
+
+        const spy = vi.spyOn(provider, "delete").mockResolvedValue();
+        const resolver = new ProductResolver(provider);
+
+        // Act
+        const actual = resolver.delete(product.getVin());
+
+        // Assert
+        await expect(actual).resolves.toEqual(undefined);
+        expect(spy).toHaveBeenCalledWith(product.getVin());
         expect(spy).toHaveBeenCalledTimes(1);
     });
 });

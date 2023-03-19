@@ -23,7 +23,7 @@ model Customer {
 
 model Product {
   id        String   @id @default(cuid())
-  vin       String
+  vin       String   @unique
   colour    String
   make      String
   model     String

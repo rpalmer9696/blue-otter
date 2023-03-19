@@ -43,6 +43,44 @@ export default class ProductProvider implements Product {
         });
     }
 
+    async delete(vin: string) {
+        return new Promise<void>((resolve, reject) => {
+            const results: ProductData[] = [];
+
+            fs.createReadStream(path.resolve(CONFIG.PRODUCT_PATH))
+                .pipe(csv.parse({ headers: true }))
+                .on("error", (error) => reject(error))
+                .on("data", (row) => {
+                    if (row.vin !== vin) {
+                        results.push(this.toProduct(row));
+                    }
+                })
+                .on("end", () => {
+                    const formattedHeaders = Object.keys(results[0]).join(",");
+
+                    const formattedRows = results.map((row) => {
+                        return `${row.getVin()},${row.getColour()},${row.getMake()},${row.getModel()},${row.getPrice()}`;
+                    });
+
+                    const data = [formattedHeaders, ...formattedRows].join(
+                        "\r\n"
+                    );
+
+                    fs.writeFile(
+                        path.resolve(CONFIG.PRODUCT_PATH),
+                        data.concat("\r\n"),
+                        (error) => {
+                            if (error) {
+                                reject(error);
+                            } else {
+                                resolve();
+                            }
+                        }
+                    );
+                });
+        });
+    }
+
     private async parse(args: ProductArgs) {
         return new Promise<ProductData[]>((resolve, reject) => {
             const results: ProductData[] = [];

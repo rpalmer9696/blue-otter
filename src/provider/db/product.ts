@@ -45,4 +45,12 @@ export default class ProductProvider implements Product {
             row.price
         );
     }
+
+    async delete(vin: string) {
+        await prisma.product.delete({
+            where: {
+                vin: vin,
+            },
+        });
+    }
 }

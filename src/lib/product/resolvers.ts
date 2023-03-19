@@ -13,4 +13,8 @@ export class ProductResolver {
     add(product: ProductData) {
         return this.provider.add(product);
     }
+
+    delete(vin: string) {
+        return this.provider.delete(vin);
+    }
 }
