@@ -14,3 +14,11 @@ export type CreateCustomerArgs = {
     contactNumber: string;
     postcode: string;
 };
+
+export type UpdateCustomerArgs = {
+    email: string;
+    forename?: string;
+    surname?: string;
+    contactNumber?: string;
+    postcode?: string;
+};

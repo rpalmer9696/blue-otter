@@ -17,4 +17,8 @@ export class CustomerResolver {
     delete(email: string) {
         return this.provider.delete(email);
     }
+
+    update(customer: CustomerData) {
+        return this.provider.update(customer);
+    }
 }

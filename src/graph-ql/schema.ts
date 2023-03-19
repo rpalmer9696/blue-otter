@@ -42,6 +42,13 @@ const schema = `
         deleteProduct(
             vin: String!
         ): Product
+        updateCustomer(
+            email: String!
+            forename: String
+            surname: String
+            contactNumber: String
+            postcode: String
+        ): Customer
     }
 `;
 

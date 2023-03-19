@@ -10,4 +10,5 @@ export interface Customer {
     fetch(args?: CustomerArgs): Promise<CustomerData[]>;
     add(customer: CustomerData): Promise<CustomerData>;
     delete(email: string): Promise<void>;
+    update(customer: CustomerData): Promise<CustomerData>;
 }

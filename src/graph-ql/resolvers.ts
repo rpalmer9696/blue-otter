@@ -1,4 +1,8 @@
-import { CustomerArgs, CreateCustomerArgs } from "@/lib/customer/types";
+import {
+    CustomerArgs,
+    CreateCustomerArgs,
+    UpdateCustomerArgs,
+} from "@/lib/customer/types";
 import { Customer as CustomerData } from "@/lib/customer/data";
 import { CreateProductArgs, ProductArgs } from "@/lib/product/types";
 import { Product as ProductData } from "@/lib/product/data";
@@ -17,6 +21,7 @@ export function getResolvers() {
             createProduct: createProductResolver,
             deleteCustomer: deleteCustomerResolver,
             deleteProduct: deleteProductResolver,
+            updateCustomer: updateCustomerResolver,
         },
     };
 }
@@ -39,6 +44,18 @@ function createCustomerResolver(parent: unknown, args: CreateCustomerArgs) {
 
 function deleteCustomerResolver(parent: unknown, args: CreateCustomerArgs) {
     return Factory.getCustomer().delete(args.email);
+}
+
+function updateCustomerResolver(parent: unknown, args: UpdateCustomerArgs) {
+    return Factory.getCustomer().update(
+        new CustomerData(
+            args.email,
+            args.forename || "",
+            args.surname || "",
+            args.contactNumber || "",
+            args.postcode || ""
+        )
+    );
 }
 
 function productQueryResolver(parent: unknown, args: ProductArgs) {

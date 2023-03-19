@@ -53,4 +53,26 @@ export default class CustomerProvider implements Customer {
             },
         });
     }
+
+    async update(customer: CustomerData) {
+        const row = await prisma.customer.update({
+            where: {
+                email: customer.getEmail(),
+            },
+            data: {
+                forename: customer.getForename(),
+                surname: customer.getSurname(),
+                contact_number: customer.getContactNumber(),
+                postcode: customer.getPostcode(),
+            },
+        });
+
+        return new CustomerData(
+            row.email,
+            row.forename,
+            row.surname,
+            row.contact_number,
+            row.postcode
+        );
+    }
 }
