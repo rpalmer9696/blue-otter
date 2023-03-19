@@ -22,6 +22,7 @@ export function getResolvers() {
             deleteCustomer: deleteCustomerResolver,
             deleteProduct: deleteProductResolver,
             updateCustomer: updateCustomerResolver,
+            updateProduct: updateProductResolver,
         },
     };
 }
@@ -76,4 +77,16 @@ function createProductResolver(parent: unknown, args: CreateProductArgs) {
 
 function deleteProductResolver(parent: unknown, args: CreateProductArgs) {
     return Factory.getProduct().delete(args.vin);
+}
+
+function updateProductResolver(parent: unknown, args: CreateProductArgs) {
+    return Factory.getProduct().update(
+        new ProductData(
+            args.vin,
+            args.colour || "",
+            args.make || "",
+            args.model || "",
+            args.price || 0
+        )
+    );
 }

@@ -5,4 +5,5 @@ export interface Product {
     fetch(args?: ProductArgs): Promise<ProductData[]>;
     add(product: ProductData): Promise<ProductData>;
     delete(vin: string): Promise<void>;
+    update(product: ProductData): Promise<ProductData>;
 }

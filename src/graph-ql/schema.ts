@@ -49,6 +49,13 @@ const schema = `
             contactNumber: String
             postcode: String
         ): Customer
+        updateProduct(
+            vin: String!
+            colour: String
+            make: String
+            model: String
+            price: Float
+        ): Product
     }
 `;
 
