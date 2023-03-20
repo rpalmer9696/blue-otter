@@ -17,7 +17,7 @@ Can be found at <domain-name>/api/graphql
 
 ## Setup
 
-run `npm install`
-copy .env.example to .env
-run `npx prisma db push` #Only is using a database
+run `npm install`  
+copy .env.example to .env  
+run `npx prisma db push` #Only is using a database  
 run `npm run dev`
